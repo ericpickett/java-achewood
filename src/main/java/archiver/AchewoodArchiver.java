@@ -24,6 +24,8 @@ public class AchewoodArchiver {
 
 	
 	public static void main(String[] args) throws Exception {
+		//TODO bootstrap the plist processor
+		PlistProcessor.getInstance();
 		System.out.println(new Date());
 		URL listPageUrl = new URL(BASEURL + "/list.php"); // achewood list page has a full list of comic urls and titles
 		HtmlPage listPage = new HtmlPage(listPageUrl); // if this doesn't connect the whole thing blows up
