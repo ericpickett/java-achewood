@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class AchewoodArchiver {
-	public static final String BASEURL = "http://achewood.com";
+	public static final String BASEURL = "http://www.achewood.com";
 
 	private static final String LISTPAGESELECTOR = "dl dd a";
 	private static final AtomicInteger comicsCounter = new AtomicInteger(0);
@@ -24,8 +24,6 @@ public class AchewoodArchiver {
 
 	
 	public static void main(String[] args) throws Exception {
-		//TODO bootstrap the plist processor
-		PlistProcessor.getInstance();
 		System.out.println(new Date());
 		URL listPageUrl = new URL(BASEURL + "/list.php"); // achewood list page has a full list of comic urls and titles
 		HtmlPage listPage = new HtmlPage(listPageUrl); // if this doesn't connect the whole thing blows up
@@ -46,6 +44,7 @@ public class AchewoodArchiver {
 			if (comic == null) {
 				continue;
 			} else {
+				PlistProcessor.getInstance().comics.add(comic);
 				pool.execute(comic);
 			}
 		} while (comicsCounter().get() > 0);

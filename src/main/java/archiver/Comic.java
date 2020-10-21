@@ -93,6 +93,7 @@ public class Comic implements Runnable {
 	}
 	
 	private void readImagePage() throws IOException {
+		System.out.println("reading image");
 		img = ImageIO.read(imageUrl);
 	}
 	

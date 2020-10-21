@@ -1,5 +1,6 @@
 package archiver;
 
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -11,7 +12,9 @@ public class HtmlPage {
     private Document htmlContents;
 
     public HtmlPage(URL url) throws IOException {
-        this.htmlContents = Jsoup.connect(url.toString()).get();
+    	Connection connection = Jsoup.connect(url.toString());
+    	connection.timeout(10000);
+        this.htmlContents = connection.get();
     }
 
     public Elements selectElements(String selector) throws IOException {

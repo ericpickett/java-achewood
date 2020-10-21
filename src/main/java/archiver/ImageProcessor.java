@@ -15,6 +15,7 @@ public class ImageProcessor {
 	private static final Color BACKGROUNDCOLOR = Color.WHITE;
 	
 	public void processImage(Comic comic) {
+		System.out.println("in the process block");
 		BufferedImage img = comic.getImg();
 		String[] texts = {comic.getDateline(), comic.getTitle(), comic.getCaption()};
 		ComicText comicText = new ComicText(texts, img);
@@ -30,6 +31,7 @@ public class ImageProcessor {
 	private void saveImage(Comic comic, BufferedImage img) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		File outfile = new File(SAVEPATH + format.format(comic.getDate()) + ".png");
+		System.out.println("in the save block");
 		try {
 			ImageIO.write(img, "png", outfile);
 		} catch (Exception e) {
