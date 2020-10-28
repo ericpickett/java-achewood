@@ -49,6 +49,7 @@ public class AchewoodArchiver {
 			}
 		} while (comicsCounter().get() > 0);
 		pool.shutdown();
+		PlistProcessor.getInstance().saveDocument();
 		System.out.println(new Date());
 	}
 

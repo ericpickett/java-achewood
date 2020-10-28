@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,7 +37,7 @@ public class PlistProcessor {
 		} catch (ParserConfigurationException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
-			return;
+			throw new RuntimeException();
 		}
 		DOMImplementation implementation = builder.getDOMImplementation();
 		DocumentType type = implementation.createDocumentType("plist", "-//Apple//DTD PLIST 1.0//EN", "http://www.apple.com/DTDs/PropertyList-1.0.dtd");
@@ -49,12 +50,38 @@ public class PlistProcessor {
 		Element rootDictElement = document.createElement("dict");
 		rootElement.appendChild(rootDictElement);
 		
-		Element rootDictKeyElement = document.createElement("key");
-		rootDictKeyElement.setTextContent("Comics");
-		rootDictElement.appendChild(rootDictKeyElement);
-		
-		Element rootDictArrayElement = document.createElement("array");
-		rootDictElement.appendChild(rootDictArrayElement);
+		for(Comic comic : comics) {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			String dateString = format.format(comic.getDate());
+			
+			Element rootDictKeyElement = document.createElement("key");
+			rootDictKeyElement.setTextContent(dateString);
+			rootDictElement.appendChild(rootDictKeyElement);
+			
+			Element comicDictElement = document.createElement("dict");
+			rootDictElement.appendChild(comicDictElement);
+			
+			Element titleKeyElement = document.createElement("key");
+			titleKeyElement.setTextContent("title");
+			comicDictElement.appendChild(titleKeyElement);
+			Element titleValueElement = document.createElement("string");
+			titleValueElement.setTextContent(comic.getTitle());
+			comicDictElement.appendChild(titleValueElement);
+			
+			Element captionKeyElement = document.createElement("key");
+			captionKeyElement.setTextContent("caption");
+			comicDictElement.appendChild(captionKeyElement);
+			Element captionValueElement = document.createElement("string");
+			captionValueElement.setTextContent(comic.getCaption());
+			comicDictElement.appendChild(captionValueElement);
+			
+			Element datelineKeyElement = document.createElement("key");
+			datelineKeyElement.setTextContent("dateline");
+			comicDictElement.appendChild(datelineKeyElement);
+			Element datelineValueElement = document.createElement("string");
+			datelineValueElement.setTextContent(comic.getDateline());
+			comicDictElement.appendChild(datelineValueElement);
+		}
 		
 		DOMSource domSource = new DOMSource(document);
 		DocumentType documentType = document.getDoctype();
@@ -70,7 +97,7 @@ public class PlistProcessor {
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-			return;
+			throw new RuntimeException();
 		}
 		
 		
@@ -81,6 +108,7 @@ public class PlistProcessor {
 		} catch (TransformerException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			throw new RuntimeException();
 		}
 		String xmlString = stringWriter.toString();
 		try {
@@ -91,6 +119,7 @@ public class PlistProcessor {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new RuntimeException();
 		}
 	}
 	
