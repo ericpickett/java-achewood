@@ -47,19 +47,19 @@ public class PlistProcessor {
 		Element rootElement = document.getDocumentElement();
 		rootElement.setAttribute("version", "1.0");
 		
-		Element rootDictElement = document.createElement("dict");
-		rootElement.appendChild(rootDictElement);
+		Element rootArrayElement = document.createElement("array");
+		rootElement.appendChild(rootArrayElement);
 		
 		for(Comic comic : comics) {
+			Element comicDictElement = document.createElement("dict");
+			rootArrayElement.appendChild(comicDictElement);
+			
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			String dateString = format.format(comic.getDate());
 			
-			Element rootDictKeyElement = document.createElement("key");
+			Element rootDictKeyElement = document.createElement("string");
 			rootDictKeyElement.setTextContent(dateString);
-			rootDictElement.appendChild(rootDictKeyElement);
-			
-			Element comicDictElement = document.createElement("dict");
-			rootDictElement.appendChild(comicDictElement);
+			comicDictElement.appendChild(rootDictKeyElement);
 			
 			Element titleKeyElement = document.createElement("key");
 			titleKeyElement.setTextContent("title");
