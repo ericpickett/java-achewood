@@ -54,6 +54,10 @@ public class PlistProcessor {
 			Element comicDictElement = document.createElement("dict");
 			rootArrayElement.appendChild(comicDictElement);
 			
+			Element dateKeyElement = document.createElement("key");
+			dateKeyElement.setTextContent("date");
+			comicDictElement.appendChild(dateKeyElement);
+			
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			String dateString = format.format(comic.getDate());
 			
